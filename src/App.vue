@@ -5,7 +5,7 @@
 			<section>
 				<div class="container">
 					<h1>{{title}}</h1>
-					<modal title="First modal" v-if="modalFirst" @modalClose="modalFirst = false">
+					<modal title="First modal" v-show="modalFirst" @modalClose="modalFirst = false">
 						<div slot="modalBody">
 							<p>test</p>
 							<button class="btn btnPrimary" @click="modalFirst = !modalFirst">Modal</button>

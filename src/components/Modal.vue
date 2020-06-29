@@ -1,19 +1,21 @@
 <template>
-	<div class="modal__wrapper"  @click="$emit('modalClose')">
-		<div class="modal-content" @click.stop>
-			<div class="modal-header">
-				<div class="modal-title">{{title}}</div>
-				<!--напрямую эмитит событие, минуя создание метода-->
-				<button class="button-close" @click="$emit('modalClose')">x</button>
-			</div>
-			<div class="modal-body">
-				<slot name="modalBody">
-					Default body
-				</slot>
-				<slot name="modalFooter">Default modal footer</slot>
+	<transition name="modal">
+		<div class="modal__wrapper" @click="$emit('modalClose')">
+			<div class="modal-content" @click.stop>
+				<div class="modal-header">
+					<div class="modal-title">{{title}}</div>
+					<!--напрямую эмитит событие, минуя создание метода-->
+					<button class="button-close" @click="$emit('modalClose')">x</button>
+				</div>
+				<div class="modal-body">
+					<slot name="modalBody">
+						Default body
+					</slot>
+					<slot name="modalFooter">Default modal footer</slot>
+				</div>
 			</div>
 		</div>
-	</div>
+	</transition>
 </template>
 
 <script>
@@ -80,5 +82,13 @@
 	}
 	.modal-body {
 		text-align: center;
+	}
+
+	.modal-enter, .modal-leave-active {
+		opacity: 0;
+	}
+	.modal-enter .modal-content,
+	.modal-leave-active .modal-content {
+		transform: scale(1.2);
 	}
 </style>
