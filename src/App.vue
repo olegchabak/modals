@@ -23,15 +23,22 @@
 						<div slot="modalBody">
 							<form @submit.prevent="submitSecondForm">
 								<label for="inputName">Your name:</label>
-								<input id="inputName" type="text" v-model="modalSecond.name">
+								<input id="inputName" required type="text" v-model="modalSecond.name">
 								<label for="inputEmail">Your email:</label>
-								<input id="inputEmail" type="email" v-model="modalSecond.email">
+								<input id="inputEmail" required type="email" v-model="modalSecond.email">
 								<button class="btn btnPrimary">Submit</button>
 							</form>
 						</div>
 						<div slot="modalFooter"></div>
 					</modal>
 					<button class="btn btnPrimary" @click="modalSecond.show = !modalSecond.show">Modal with form</button>
+
+					<!--modal with Validate-->
+					<button class="btn btnPrimary" @click="modalValidate = !modalValidate">Modal with validate</button>
+					<modal-validate
+							v-show="modalValidate" @modalClose="modalValidate = false"
+					></modal-validate>
+
 				</div>
 			</section>
 		</div>
@@ -40,9 +47,11 @@
 </template>
 
 <script>
-	import modal from '@/components/Modal'
+	import modal from '@/components/UI/Modal'
+	import modalValidate from '@/components/ModalValidate'
+
 	export default {
-		components: {modal},
+		components: {modal, modalValidate},
 		data(){
 			return {
 				title: 'My modals',
@@ -51,7 +60,8 @@
 					show: false,
 					name: '',
 					email: ''
-				}
+				},
+				modalValidate: false
 			}
 		},
 		methods:{
@@ -59,7 +69,11 @@
 				console.log({
 					name: this.modalSecond.name,
 					email: this.modalSecond.email
-				})
+				});
+				this.modalSecond.name = '';
+				this.modalSecond.email = '';
+				this.modalSecond.show = false;
+
 			}
 		}
 	}
