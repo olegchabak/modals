@@ -59,7 +59,7 @@
 	.modal-content {
 		position: relative;
 		max-width: 600px;
-		padding: 20px 18px;
+		padding: 40px;
 		background-color: #fff;
 		border: 1px solid #dcdfe6;
 		transition: all .2s ease;
@@ -81,6 +81,9 @@
 		.button-close {
 			cursor: pointer;
 		}
+	}
+	.modal-title {
+		font-weight: bold;
 	}
 	.modal-body {
 		text-align: center;
