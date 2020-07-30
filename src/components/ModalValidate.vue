@@ -1,7 +1,7 @@
 <template>
 	<modal title="Modal with validate" @modalClose="$emit('modalClose')">
 		<div slot="modalBody">
-			<form @submit.prevent="submitSecondForm">
+			<form @submit.prevent="onSubmit">
 				<div class="form-item" :class="{'form-item--error': $v.name.$error}">
 					<label for="inputName">Your name:</label>
 					<input id="inputName" v-model="name" :class="{error: $v.name.$error}" @change="$v.name.$touch()">
@@ -44,7 +44,24 @@
 				email: ''
 			}
 		},
+		methods: {
+			onSubmit() {
+				this.$v.$touch();
+				if (!this.$v.$invalid) {
+					const user = {
+						name: this.$v.name.$model,
+						email: this.$v.email.$model
+					}
+					console.log(user)
 
+					// done!
+					this.$v.name.$model = ''
+					this.$v.email.$model = ''
+					this.$v.$reset()
+					this.$emit('modalClose')
+				}
+			}
+		}
 
 	}
 </script>
