@@ -4,7 +4,7 @@
 			<form @submit.prevent="submitSecondForm">
 				<div class="form-item" :class="{'form-item--error': $v.name.$error}">
 					<label for="inputName">Your name:</label>
-					<input id="inputName" v-model="name" :class="{error: $v.name.$error}" @input="$v.name.$touch()">
+					<input id="inputName" v-model="name" :class="{error: $v.name.$error}" @change="$v.name.$touch()">
 					<p class="error-text" v-if="!$v.name.required">Field is required</p>
 					<p class="error-text" v-if="!$v.name.alpha">The field must contain only letters</p>
 					<p class="error-text" v-if="!$v.name.minLength">The field must contain at least {{$v.name.$params.minLength.min}} characters</p>
@@ -15,10 +15,10 @@
 						id="inputEmail"
 						v-model="email"
 						:class="{error: $v.email.$error}"
-						@input="$v.email.$touch()"
+						@change="$v.email.$touch()"
 					>
 					<p class="error-text" v-if="!$v.email.required">Field is required</p>
-					<p class="error-text" v-if="!$v.email.alpha">The field must contain only email</p>
+					<p class="error-text" v-if="!$v.email.alpha">Invalid email address</p>
 				</div>
 				<button class="btn btnPrimary">Submit</button>
 			</form>
@@ -35,7 +35,7 @@
 		name: "modal-validate",
 		components: {modal},
 		validations: {
-			name: {required, alpha, minLength:minLength(2)},
+			name: {required, alpha, minLength: minLength(2)},
 			email: {email, required}
 		},
 		data() {
@@ -54,16 +54,22 @@
 		margin-bottom: 30px;
 		&--error {
 			color: red;
+			.error-text {
+				display: block;
+			}
 		}
 		input {
 			margin-bottom: 5px;
+			&.error {
+				border-color: rgba(255, 0, 0, 0.99);
+			}
 		}
-		.error {
-			border-color: rgba(255, 0, 0, 0.99);
-		}
+
 	}
 	.error-text {
 		font-size: 13px;
+		display: none;
+
 	}
 
 
